@@ -117,7 +117,7 @@ void vm_exec(VM *vm, int startip, bool trace)
                 break;
             case LOAD: // load local or arg; 1st local is fp+1, args are fp-3, fp-4, fp-5, ...
                 offset = vm->code[ip++];
-                vm->stack[++sp] = vm->stack[offset];
+                vm->stack[++sp] = vm->call_stack[callsp].locals[offset];
                 break;
             case GLOAD: // load from global memory
                 addr = vm->code[ip++];
@@ -125,7 +125,7 @@ void vm_exec(VM *vm, int startip, bool trace)
                 break;
             case STORE:
                 offset = vm->code[ip++];
-                vm->stack[offset] = vm->stack[sp--];
+                vm->call_stack[callsp].locals[offset] = vm->stack[sp--];
                 break;
             case GSTORE:
                 addr = vm->code[ip++];
