@@ -51,6 +51,7 @@ typedef struct {
 } VM;
 
 VM *vm_create(int *code, int code_size, int nglobals);
+void vm_free(VM *vm);
 void vm_init(VM *vm, int *code, int code_size, int nglobals);
 void vm_exec(VM *vm, int startip, bool trace);
 void vm_print_instr(int *code, int ip);

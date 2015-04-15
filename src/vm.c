@@ -42,6 +42,12 @@ void vm_init(VM *vm, int *code, int code_size, int nglobals)
     vm->nglobals = nglobals;
 }
 
+void vm_free(VM *vm)
+{
+    free(vm->globals);
+    free(vm);
+}
+
 VM *vm_create(int *code, int code_size, int nglobals)
 {
     VM *vm = calloc(1, sizeof(VM));

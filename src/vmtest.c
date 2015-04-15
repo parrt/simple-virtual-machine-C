@@ -79,23 +79,25 @@ static int f[] = {
 };
 
 int main(int argc, char *argv[]) {
-	VM *vm = vm_create(hello, sizeof(hello), 0);
-	vm_exec(vm, 0, false);
-
-//    int t1 = (clock() / (CLOCKS_PER_SEC / 1000));
-	vm = vm_create(loop, sizeof(loop), 2);
-	vm_exec(vm, 0, false);
-	vm_print_data(vm->globals, vm->nglobals);
+//	VM *vm = vm_create(hello, sizeof(hello), 0);
+//	vm_exec(vm, 0, false);
+//
+////    int t1 = (clock() / (CLOCKS_PER_SEC / 1000));
+//	vm = vm_create(loop, sizeof(loop), 2);
+//	vm_exec(vm, 0, false);
+//	vm_print_data(vm->globals, vm->nglobals);
 
 //    int t2 = (clock() / (CLOCKS_PER_SEC / 1000));
 
-	vm = vm_create(factorial, sizeof(factorial), 0);
+	VM *vm = vm_create(factorial, sizeof(factorial), 0);
 	vm_exec(vm, 23, true);
 
-	vm = vm_create(f, sizeof(f), 0);
-	vm_exec(vm, 0, false);
+//	vm = vm_create(f, sizeof(f), 0);
+//	vm_exec(vm, 0, false);
 
 //    printf("duration = %d ms\n", (t2 - t1));
+
+	vm_free(vm);
 	return 0;
 }
 
