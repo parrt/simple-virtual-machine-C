@@ -6,6 +6,10 @@
 extern "C" {
 #endif
 
+#define DEFAULT_STACK_SIZE      1000
+#define DEFAULT_CALL_STACK_SIZE 100
+#define DEFAULT_NUM_LOCALS      10
+
 typedef enum {
     NOOP    = 0,
     IADD    = 1,   // int add
@@ -23,14 +27,38 @@ typedef enum {
     GSTORE  = 13,  // store in global memory
     PRINT   = 14,  // print stack top
     POP     = 15,  // throw away top of stack
-    HALT    = 16
+    CALL    = 16,  // call function at address with nargs,nlocals
+    RET     = 17,  // return value from function
+    HALT    = 18
 } VM_CODE;
 
-void vm_exec(int *code, int count, int startip, int nglobals, int trace);
+typedef struct {
+    int returnip;
+    int locals[DEFAULT_NUM_LOCALS];
+} Context;
+
+typedef struct {
+    int *code;
+    int code_size;
+
+    // global variable space
+    int *globals;
+    int nglobals;
+
+    // Operand stack, grows upwards
+    int stack[DEFAULT_STACK_SIZE];
+    Context call_stack[DEFAULT_CALL_STACK_SIZE];
+} VM;
+
+VM *vm_create(int *code, int code_size, int nglobals);
+void vm_init(VM *vm, int *code, int code_size, int nglobals);
+void vm_exec(VM *vm, int startip, bool trace);
+void vm_print_instr(int *code, int ip);
+void vm_print_stack(int *stack, int count);
+void vm_print_data(int *globals, int count);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-
