@@ -140,7 +140,7 @@ interp_ICONST:
 	vm->stack[++sp] = vm->code[ip++];  // push operand
 	DISPATCH;
 
-interp_LOAD: // load local or arg; 1st local is fp+1, args are fp-3, fp-4, fp-5, ...
+interp_LOAD: // load local or arg
 	TRACE_BEGIN;
 	offset = vm->code[ip++];
 	vm->stack[++sp] = vm->call_stack[callsp].locals[offset];
